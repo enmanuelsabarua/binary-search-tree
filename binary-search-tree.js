@@ -11,6 +11,21 @@ class Tree {
         this.arr = arr;
         this.root = root;
     }
+
+    insert(root, data) {
+        if (root == null) {
+            root = new Node(data);
+            return root;
+        }
+
+        if (data < root.data) {
+            root.left = this.insert(root.left, data);
+        } else if (data > root.data) {
+            root.right = this.insert(root.right, data);
+        }
+
+        return root;
+    }
 }
 
 function buildTree(arr, start, end) {
@@ -27,6 +42,7 @@ function buildTree(arr, start, end) {
     return node;
 }
 
+// Utility functions
 function getUnique(array){
     const sorted = array.slice().sort((a,b)=>a-b)
     const uniqueArray = [];
@@ -53,9 +69,12 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
-const arr = [2, 3, 1, -4, 0, 1];
+
+// Testing code
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const cleanArr = getUnique(arr);
 const root = buildTree(cleanArr, 0, arr.length - 1)
 const tree = new Tree(cleanArr, root);
+tree.insert(root, 0);
 
 prettyPrint(root);
