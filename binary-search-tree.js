@@ -26,8 +26,44 @@ class Tree {
 
         return root;
     }
+
+    delete(root, data) {
+        if (root == null) {
+            return root;
+        }
+
+        if (data < root.data) {
+            root.left = this.delete(root.left, data);
+        } else if (data > root.data) {
+            root.right = this.delete(root.right, data)
+        } else {
+
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+
+            root.data = Tree.minValue(root.right);
+
+            root.right = this.delete(root.right, root.data);
+
+        }
+
+        return root;
+    }
+
+    static minValue(root) {
+        let minV = root.data;
+        while (root.left != null) {
+            minV = root.left.data;
+            root = root.left;
+        }
+        return minV;
+    }
 }
 
+// Create the tree
 function buildTree(arr, start, end) {
     
     if (start > end) {
@@ -56,6 +92,7 @@ function getUnique(array){
     return uniqueArray;
 }
 
+// Print the tree
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node === null) {
        return;
@@ -76,5 +113,7 @@ const cleanArr = getUnique(arr);
 const root = buildTree(cleanArr, 0, arr.length - 1)
 const tree = new Tree(cleanArr, root);
 tree.insert(root, 0);
+tree.delete(root, 7);
 
+// inorderRec(root);
 prettyPrint(root);
