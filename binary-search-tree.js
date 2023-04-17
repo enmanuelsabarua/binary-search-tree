@@ -53,6 +53,19 @@ class Tree {
         return root;
     }
 
+    find(root, value) {
+        if (root == null || root.data == value) {
+            return root;
+        } 
+
+        if (root.data < value) {
+            return this.find(root.right, value);
+        }
+        
+        return this.find(root.left, value);
+        
+    }
+
     static minValue(root) {
         let minV = root.data;
         while (root.left != null) {
@@ -114,6 +127,8 @@ const root = buildTree(cleanArr, 0, arr.length - 1)
 const tree = new Tree(cleanArr, root);
 tree.insert(root, 0);
 tree.delete(root, 7);
+console.log(tree.find(root, 2));
 
 // inorderRec(root);
 prettyPrint(root);
+
