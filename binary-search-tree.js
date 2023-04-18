@@ -66,6 +66,24 @@ class Tree {
         
     }
 
+    levelOrder(root) {
+        if (root == null) return;
+        const breadthFirst = [];
+        const queue = [];
+        queue.push(root);
+        while (queue.length != 0) {
+            let current = queue[0];
+            breadthFirst.push(current.data);
+            if (current.left != null) queue.push(current.left);
+            if (current.right != null) queue.push(current.right);
+            queue.shift();
+        }
+
+        return breadthFirst;
+
+        
+    }
+
     static minValue(root) {
         let minV = root.data;
         while (root.left != null) {
@@ -127,7 +145,8 @@ const root = buildTree(cleanArr, 0, arr.length - 1)
 const tree = new Tree(cleanArr, root);
 tree.insert(root, 0);
 tree.delete(root, 7);
-console.log(tree.find(root, 2));
+// console.log(tree.find(root, 2));
+console.log(tree.levelOrder(root));
 
 // inorderRec(root);
 prettyPrint(root);
